@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>JavaScript Runner</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 30px;
+      background-color: #f4f4f4;
+    }
+    textarea {
+      width: 100%;
+      height: 200px;
+      font-family: monospace;
+      font-size: 14px;
+    }
+    #output {
+      margin-top: 20px;
+      background: #222;
+      color: #0f0;
+      padding: 10px;
+      white-space: pre-wrap;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <h1>JavaScript Code Runner Made By Harrison</h1>
+  <textarea id="code" placeholder="Paste your JavaScript code here..."></textarea>
+  <br/>
+  <button onclick="runCode()">Run Code</button>
+  <div id="output"></div>
+
+  <script>
+    function runCode() {
+      const code = document.getElementById('code').value;
+      const output = document.getElementById('output');
+      output.innerText = '';
+      try {
+        const result = eval(code);
+        if (result !== undefined) {
+          output.innerText += result + '\\n';
+        }
+      } catch (e) {
+        output.innerText += 'Error: ' + e.message + '\\n';
+      }
+    }
+
+    // Optionally redirect console.log to output div
+    (function(){
+      const originalLog = console.log;
+      console.log = function(...args) {
+        originalLog(...args);
+        const output = document.getElementById('output');
+        output.innerText += args.join(' ') + '\\n';
+      };
+    })();
+  </script>
+</body>
+</html>
